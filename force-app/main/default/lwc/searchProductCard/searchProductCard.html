@@ -62,9 +62,9 @@
             </div>
         </template>
 
-        <!-- FULFILLMENT OPTIONS -->
+        <!-- BEGIN FULFILLMENT OPTIONS -->
         <div class="radioGroup">
-            <lightning-radio-group  name="radioGroup{detail.productId}"
+            <lightning-radio-group  name={fulfillmentOptionsComponentName}
                                     class="radioGroup"
                                     label=""
                                     options={fulfillmentOptions}
@@ -72,6 +72,7 @@
                                     type="button">
             </lightning-radio-group> 
         </div>
+        <!-- END FULFILLMENT OPTIONS -->
 
         <div
             if:true={showCallToActionButton}

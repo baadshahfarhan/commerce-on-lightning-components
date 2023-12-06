@@ -801,4 +801,8 @@ export default class SearchProductCard extends LightningElement {
         ];
         */
     }
+
+    get fulfillmentOptionsComponentName() { 
+        return 'fulfillmentOptionsRadioGroup' + this._displayData.id;
+    }
 }
