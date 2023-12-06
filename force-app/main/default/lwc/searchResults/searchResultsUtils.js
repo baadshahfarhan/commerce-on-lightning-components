@@ -187,7 +187,7 @@ export function computeConfiguration(configParameters) {
         showOriginalPrice: showListingPrice = false,
         showProductImage = false,
         viewOptionsButtonText = '',
-        showQuantitySelector = false,
+        showQuantitySelector = true,
         minimumQuantityGuideText = '',
         maximumQuantityGuideText = '',
         incrementQuantityGuideText = '',

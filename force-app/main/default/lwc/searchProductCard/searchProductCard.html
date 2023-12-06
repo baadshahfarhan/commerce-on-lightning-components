@@ -62,6 +62,17 @@
             </div>
         </template>
 
+        <!-- FULFILLMENT OPTIONS -->
+        <div class="radioGroup">
+            <lightning-radio-group  name="radioGroup{detail.productId}"
+                                    class="radioGroup"
+                                    label=""
+                                    options={fulfillmentOptions}
+                                    value={fulfillmentOptionValue}
+                                    type="button">
+            </lightning-radio-group> 
+        </div>
+
         <div
             if:true={showCallToActionButton}
             class="callToActionArea">

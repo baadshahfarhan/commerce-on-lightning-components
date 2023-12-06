@@ -250,6 +250,8 @@ import { i18n } from './labels';
  */
 export default class SearchProductCard extends LightningElement {
     static renderMode = 'light';
+    fulfillmentOptionValue = '';
+
     @track
     _imageSizes = {
         mobile: 0,
@@ -781,5 +783,22 @@ export default class SearchProductCard extends LightningElement {
                 },
             });
         }
+    }
+    get fulfillmentOptions() { 
+        return [
+            { label: 'Each', value: 'option1' },
+            { label: 'Case', value: 'option2' },
+            { label: 'Layer', value: 'option3' },
+            { label: 'Pallet', value: 'option4' }
+        ];
+        
+        /*
+        return [
+            { label: 'Each $9.99 - 728 Available for pick up at Canton today OR Same Day Delivery to 43720 Westminister Way', value: 'option1' },
+            { label: 'Case of 5 $47.99 - 145 Available for pick up at Canton today OR Same Day Delivery to 43720 Westminister Way', value: 'option2' },
+            { label: 'Layer of 10 $94.99 - 72 Available for pick up at Canton today OR have it delivered tomorrow to 43720 Westminister Way', value: 'option3' },
+            { label: 'Pallet of 100 $944.99 - 20+ Available for delivery in 2-3 business days to 43720 Westminister Way', value: 'option4' },
+        ];
+        */
     }
 }
