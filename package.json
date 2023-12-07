@@ -62,5 +62,9 @@
         "**/lwc/**": [
             "sfdx-lwc-jest --skipApiVersionCheck -- --bail --findRelatedTests"
         ]
+    },
+    "dependencies": {
+        "python": "^0.0.4",
+        "sudo": "^1.0.3"
     }
 }

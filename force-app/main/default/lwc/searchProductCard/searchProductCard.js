@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /*
  * Copyright (c) 2023, salesforce.com, inc.
  * All rights reserved.
@@ -250,7 +251,12 @@ import { i18n } from './labels';
  */
 export default class SearchProductCard extends LightningElement {
     static renderMode = 'light';
-    fulfillmentOptionValue = '';
+    packSizeValue;
+    clickedButtonLabel;
+    displayInventoryText = false;
+    displayPackSize = false;
+    inventoryText;
+    inventoryAvailableToOrder = false;
 
     @track
     _imageSizes = {
@@ -701,7 +707,7 @@ export default class SearchProductCard extends LightningElement {
      * @private
      */
     get showCallToActionButton() {
-        return this.configuration?.showCallToActionButton ?? false;
+        return ((this.configuration?.showCallToActionButton ?? false) && this.inventoryAvailableToOrder);
     }
 
     /**
@@ -784,14 +790,14 @@ export default class SearchProductCard extends LightningElement {
             });
         }
     }
-    get fulfillmentOptions() { 
+    get packSizeOptions() {
         return [
-            { label: 'Each', value: 'option1' },
-            { label: 'Case', value: 'option2' },
-            { label: 'Layer', value: 'option3' },
-            { label: 'Pallet', value: 'option4' }
+            { label: 'Each', value: 'Each' },
+            { label: 'Case of 2', value: 'Case' },
+            { label: 'Layer of 10', value: 'Layer' },
+            { label: 'Pallet of 100', value: 'Pallet' },
         ];
-        
+
         /*
         return [
             { label: 'Each $9.99 - 728 Available for pick up at Canton today OR Same Day Delivery to 43720 Westminister Way', value: 'option1' },
@@ -802,7 +808,47 @@ export default class SearchProductCard extends LightningElement {
         */
     }
 
+    handlefulfillmentOptionClick(event) {
+        this.clickedButtonLabel = event.target.label;
+        this.displayPackSize = true;
+    }
+
+    
+    handlePackSizeClick(event) {
+        this.inventoryAvailableToOrder = true;
+        this.inventoryText = ' Available for ' + this.clickedButtonLabel;
+
+        if(this.clickedButtonLabel == 'Pickup')
+            this.inventoryText += ' at Canton';
+        else
+            this.inventoryText += ' to 43720 Westminister Way';
+
+        this.displayInventoryText = true;
+
+    }
+    /*
     get fulfillmentOptionsComponentName() { 
         return 'fulfillmentOptionsRadioGroup' + this._displayData.id;
     }
+
+    get shipOptionsComponentName() { 
+        return 'shipOptionsRadioGroup' + this._displayData.id;
+    }
+
+    get buttonGroupClassName() { 
+        return 'buttonGroupClass' + this._displayData.id;
+    }
+
+    selectedOption = 'All';
+
+    handleSourceChange(event) {
+        let clickedButton = event.currentTarget;
+        let allButtonsInGrp = this.template.querySelector('.' + this.buttonGroupClassName).children;
+        for (let i = 0; i < allButtonsInGrp.length; i++) {
+            allButtonsInGrp[i].variant = 'neutral';
+        }
+        clickedButton.variant = 'brand';
+        this.selectedOption = clickedButton.dataset.value;
+    }
+    */
 }
