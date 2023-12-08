@@ -797,15 +797,22 @@ export default class SearchProductCard extends LightningElement {
             { label: 'Layer of 10', value: 'Layer' },
             { label: 'Pallet of 100', value: 'Pallet' },
         ];
+    }
 
-        /*
-        return [
-            { label: 'Each $9.99 - 728 Available for pick up at Canton today OR Same Day Delivery to 43720 Westminister Way', value: 'option1' },
-            { label: 'Case of 5 $47.99 - 145 Available for pick up at Canton today OR Same Day Delivery to 43720 Westminister Way', value: 'option2' },
-            { label: 'Layer of 10 $94.99 - 72 Available for pick up at Canton today OR have it delivered tomorrow to 43720 Westminister Way', value: 'option3' },
-            { label: 'Pallet of 100 $944.99 - 20+ Available for delivery in 2-3 business days to 43720 Westminister Way', value: 'option4' },
-        ];
-        */
+    get fulfillmentOptionsId() {
+        return 'fulfillmentOptions' + this.displayData?.id;
+    }
+
+    get pickupRadioButtonUniqueId() {
+        return this.fulfillmentOptionsId + 'Pickup';
+    }
+
+    get deliveryRadioButtonUniqueId() {
+        return this.fulfillmentOptionsId + 'Delivery';
+    }
+
+    get shippingRadioButtonUniqueId() {
+        return this.fulfillmentOptionsId + 'Shipping';
     }
 
     handlefulfillmentOptionClick(event) {
