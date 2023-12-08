@@ -121,7 +121,6 @@
                     <c-product-quantity-selector
                         if:true={showInlineQuantitySelector}
                         onvaluechanged={handleValueChanged}
-                        disabled={disabled}
                         minimum={quantityRuleMinimum}
                         maximum={quantityRuleMaximum}
                         step={quantityRuleIncrement}
@@ -132,7 +131,6 @@
                     <c-common-button
                         if:true={isCTAButtonAddToCart}
                         assistive-text={addToCartButtonAriaLabel}
-                        disabled={addToCartButtonDisabled}
                         data-product-id={displayData.id}
                         class="callToActionButton"
                         variant={actionButtonVariant}
