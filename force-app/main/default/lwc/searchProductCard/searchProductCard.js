@@ -255,7 +255,7 @@ export default class SearchProductCard extends LightningElement {
     clickedButtonLabel;
     displayInventoryText = false;
     displayPackSize = false;
-    inventoryText;
+    inventoryText = '';
     inventoryAvailableToOrder = false;
 
     @track
@@ -707,7 +707,7 @@ export default class SearchProductCard extends LightningElement {
      * @private
      */
     get showCallToActionButton() {
-        return ((this.configuration?.showCallToActionButton ?? false) && this.inventoryAvailableToOrder);
+        return (this.configuration?.showCallToActionButton ?? false) && this.inventoryAvailableToOrder;
     }
 
     /**
@@ -793,7 +793,7 @@ export default class SearchProductCard extends LightningElement {
     get packSizeOptions() {
         return [
             { label: 'Each', value: 'Each' },
-            { label: 'Case of 2', value: 'Case' },
+            { label: 'Case of 5', value: 'Case' },
             { label: 'Layer of 10', value: 'Layer' },
             { label: 'Pallet of 100', value: 'Pallet' },
         ];
@@ -811,20 +811,37 @@ export default class SearchProductCard extends LightningElement {
     handlefulfillmentOptionClick(event) {
         this.clickedButtonLabel = event.target.label;
         this.displayPackSize = true;
+        this.displayInventoryText = false;
+        this.inventoryAvailableToOrder = false;
+        this.packSizeValue = null;
     }
 
-    
     handlePackSizeClick(event) {
+        this.inventoryText = '';
         this.inventoryAvailableToOrder = true;
-        this.inventoryText = ' Available for ' + this.clickedButtonLabel;
-
-        if(this.clickedButtonLabel == 'Pickup')
-            this.inventoryText += ' at Canton';
-        else
-            this.inventoryText += ' to 43720 Westminister Way';
-
         this.displayInventoryText = true;
+        this.packSizeValue = event.detail.value;
+        //alert(this.packSizeValue);
 
+        if (this.packSizeValue === 'Pallet' && this.clickedButtonLabel === 'Shipping') {
+            this.inventoryAvailableToOrder = false;
+            this.inventoryText = 'This product is out of stock or cannot be fulfilled based on your chosen options';
+            return;
+        }
+
+        if (this.packSizeValue === 'Each') {
+            this.inventoryText += '728';
+            this.pricingInfo.negotiatedPrice = 9.99;
+        } else if (this.packSizeValue === 'Case') this.inventoryText += '145 Cases';
+        else if (this.packSizeValue === 'Layer') this.inventoryText += '72 Layers';
+        else this.inventoryText += '20+ ' + this.packSizeValue + 's';
+
+        this.inventoryText += ' Available for ' + this.clickedButtonLabel;
+
+        if (this.clickedButtonLabel === 'Pickup') this.inventoryText += ' at Canton';
+        else this.inventoryText += ' to 43720 Westminister Way';
+
+        if (this.clickedButtonLabel === 'Shipping') this.inventoryText += ' in 2-3 business days.';
     }
     /*
     get fulfillmentOptionsComponentName() { 

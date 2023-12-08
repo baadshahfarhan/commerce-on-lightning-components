@@ -47,7 +47,6 @@
             <div
                 class="priceArea"
                 if:true={showPrice}>
-
                 <c-product-pricing
                     negotiated-price={pricingInfo.negotiatedPrice}
                     original-price={pricingInfo.listingPrice}
@@ -65,10 +64,8 @@
         </template>
 
         <!-- BEGIN FULFILLMENT OPTIONS -->
-
-        <div class="slds-float_right">
-            <div>
-                <lightning-button-group>
+        <div>
+            <lightning-button-group class="slds-float_right">
                 <lightning-button
                     label="Pickup"
                     title="Pickup"
@@ -91,23 +88,29 @@
                     class="slds-m-left_x-small"
                     variant="brand"></lightning-button>
             </lightning-button-group>
-        </div>
-            <div class="slds-float_right">
-                <template lwc:if={displayPackSize}>
-                    <lightning-radio-group
-                        name={fulfillmentOptionsComponentName}
-                        label=""
-                        options={packSizeOptions}
-                        value={packSizeValue}
-                        type="button"
-                        onclick={handlePackSizeClick}></lightning-radio-group>
-                </template>
-                <template lwc:if={displayInventoryText}>
-                    <div class="slds-float_right">{inventoryText}</div>
-                </template>
+
+            <div>
+                <div>
+                    <template lwc:if={displayPackSize}>
+                        <lightning-radio-group
+                            class="slds-float_right"
+                            label=""
+                            options={packSizeOptions}
+                            value={packSizeValue}
+                            type="button"
+                            onchange={handlePackSizeClick}></lightning-radio-group>
+                    </template>
+
+                    <div>
+                        <template lwc:if={displayInventoryText}>
+                            <lightning-formatted-text
+                                class="slds-float_right"
+                                value={inventoryText}></lightning-formatted-text>
+                        </template>
+                    </div>
+                </div>
             </div>
         </div>
-
         <!-- END FULFILLMENT OPTIONS -->
 
         <div
