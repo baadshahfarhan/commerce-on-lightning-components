@@ -1,7 +1,9 @@
 <!-- sldsValidatorIgnore -->
 <template lwc:render-mode="light">
     <section class={cardContainerClass}>
-        <div class="imageArea">
+        <div
+            class="imageArea"
+            style="vertical-align: top">
             <figure
                 class="productImage"
                 if:true={showProductImage}
@@ -65,7 +67,7 @@
 
         <!-- BEGIN FULFILLMENT OPTIONS -->
         <div>
-            <ul onchange={handlefulfillmentOptionClick} class="slds-float_right">
+            <ul class="slds-float_right">
                 <li
                     style="display: inline-block"
                     class="slds-box slds-m-right_small">
@@ -73,6 +75,7 @@
                         type="radio"
                         id={pickupRadioButtonUniqueId}
                         name={fulfillmentOptionsId}
+                        onclick={handlefulfillmentOptionPickupClick}
                         value="Pickup" />
                     <label for={pickupRadioButtonUniqueId}>
                         <i class="icon">
@@ -93,6 +96,7 @@
                         type="radio"
                         id={deliveryRadioButtonUniqueId}
                         name={fulfillmentOptionsId}
+                        onclick={handlefulfillmentOptionDeliveryClick}
                         value="Delivery" />
                     <label for={deliveryRadioButtonUniqueId}>
                         <i class="icon">
@@ -113,6 +117,7 @@
                         type="radio"
                         id={shippingRadioButtonUniqueId}
                         name={fulfillmentOptionsId}
+                        onclick={handlefulfillmentOptionShippingClick}
                         value="Shipping" />
                     <label for={shippingRadioButtonUniqueId}>
                         <i class="icon">
@@ -127,59 +132,118 @@
                     </label>
                 </li>
             </ul>
-
-            <!--
-            COMMENTED shipment options
-            <lightning-button-group class="slds-float_right">
-                <lightning-button
-                    label="Pickup"
-                    title="Pickup"
-                    icon-name="standard:webcart"
-                    onclick={handlefulfillmentOptionClick}
-                    class="slds-m-left_x-small"
-                    variant="brand"></lightning-button>
-                <lightning-button
-                    label="Same-Day Delivery"
-                    title="Same-Day Delivery"
-                    icon-name="standard:business_hours"
-                    onclick={handlefulfillmentOptionClick}
-                    class="slds-m-left_x-small"
-                    variant="brand"></lightning-button>
-                <lightning-button
-                    label="Shipping"
-                    title="Shipping"
-                    icon-name="standard:shipment"
-                    onclick={handlefulfillmentOptionClick}
-                    class="slds-m-left_x-small"
-                    variant="brand"></lightning-button>
-            </lightning-button-group>
-        -->
-            <div>
-                <div>
-                    <template lwc:if={displayPackSize}>
-                        <lightning-radio-group
-                            
-                            label=""
-                            options={packSizeOptions}
-                            value={packSizeValue}
-                            type="button"></lightning-radio-group>
-                    </template>
-
-                    <div>
-                        <template lwc:if={displayInventoryText}>
-                            <lightning-formatted-text
-                                class="slds-float_right"
-                                value={inventoryText}></lightning-formatted-text>
-                        </template>
-                    </div>
-                </div>
-            </div>
         </div>
-        <!-- END FULFILLMENT OPTIONS -->
 
+        <div>
+            <ul
+                class="slds-float_right slds-m-top_medium"
+                if:true={displayPackSize}>
+                <li
+                    style="display: inline-block"
+                    class="slds-box slds-m-right_small">
+                    <input
+                        type="radio"
+                        id={eachRadioButtonUniqueId}
+                        name={packSizeId}
+                        onclick={handleEachPackSizeClick}
+                        value="Each" />
+                    <label for={eachRadioButtonUniqueId}>
+                        <i class="icon">
+                            <img
+                                width="30px"
+                                height="30px"
+                                src="https://b2bsales.bjs.com/assets/images/icons/Each.jpg" />
+                        </i>
+                        <div
+                            class="slds-text-body_small"
+                            style="font-weight: bold">
+                            <p>Each</p>
+                        </div>
+                    </label>
+                </li>
+                <li
+                    style="display: inline-block"
+                    class="slds-box slds-m-right_small">
+                    <input
+                        type="radio"
+                        id={caseRadioButtonUniqueId}
+                        name={packSizeId}
+                        onclick={handleCasePackSizeClick}
+                        value="Case" />
+                    <label for={caseRadioButtonUniqueId}>
+                        <i class="icon">
+                            <img
+                                width="30px"
+                                height="30px"
+                                src="https://b2bsales.bjs.com/assets/images/icons/Case.jpg" />
+                        </i>
+                        <div
+                            class="slds-text-body_small"
+                            style="font-weight: bold">
+                            <p>Case of 5</p>
+                        </div>
+                    </label>
+                </li>
+                <li
+                    style="display: inline-block"
+                    class="slds-box slds-m-right_small">
+                    <input
+                        type="radio"
+                        id={layerRadioButtonUniqueId}
+                        name={packSizeId}
+                        onclick={handleLayerPackSizeClick}
+                        value="Layer of 10" />
+                    <label for={layerRadioButtonUniqueId}>
+                        <i class="icon">
+                            <img
+                                width="30px"
+                                height="30px"
+                                src="https://b2bsales.bjs.com/assets/images/icons/Layer.jpg" />
+                        </i>
+                        <div
+                            class="slds-text-body_small"
+                            style="font-weight: bold">
+                            <p>Layer of 10</p>
+                        </div>
+                    </label>
+                </li>
+                <li
+                    style="display: inline-block"
+                    class="slds-box">
+                    <input
+                        type="radio"
+                        id={palletRadioButtonUniqueId}
+                        name={packSizeId}
+                        onclick={handlePalletPackSizeClick}
+                        value="Pallet of 100" />
+                    <label for={palletRadioButtonUniqueId}>
+                        <i class="icon">
+                            <img
+                                width="30px"
+                                height="30px"
+                                src="https://b2bsales.bjs.com/assets/images/icons/Pallet.jpg" />
+                        </i>
+                        <div
+                            class="slds-text-body_small"
+                            style="font-weight: bold">
+                            <p>Pallet of 100</p>
+                        </div>
+                    </label>
+                </li>
+            </ul>
+
+            <div>
+                <template lwc:if={displayInventoryText}>
+                    <lightning-formatted-rich-text
+                        class="slds-float_right slds-m-top_medium"
+                        value={inventoryText}></lightning-formatted-rich-text>
+                </template>
+            </div>
+            <!-- END FULFILLMENT OPTIONS -->
+        </div>
         <div
             if:true={showCallToActionButton}
-            class="callToActionArea">
+            class="callToActionArea slds-m-top_medium">
             <template if:false={isCTAButtonViewOptions}>
                 <div class={quantitySelectorClassList}>
                     <c-product-quantity-selector

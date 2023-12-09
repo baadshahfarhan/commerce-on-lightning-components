@@ -252,7 +252,7 @@ import { i18n } from './labels';
 export default class SearchProductCard extends LightningElement {
     static renderMode = 'light';
     packSizeValue;
-    clickedButtonLabel;
+    chosenFulfillmentOption;
     displayInventoryText = false;
     displayPackSize = false;
     inventoryText = '';
@@ -803,6 +803,23 @@ export default class SearchProductCard extends LightningElement {
         return 'fulfillmentOptions' + this.displayData?.id;
     }
 
+    get packSizeId() {
+        return 'packSize' + this.displayData?.id;
+    }
+
+    get eachRadioButtonUniqueId() {
+        return this.packSizeId + 'Each';
+    }
+    get caseRadioButtonUniqueId() {
+        return this.packSizeId + 'Case';
+    }
+    get layerRadioButtonUniqueId() {
+        return this.packSizeId + 'Layer';
+    }
+    get palletRadioButtonUniqueId() {
+        return this.packSizeId + 'Pallet';
+    }
+
     get pickupRadioButtonUniqueId() {
         return this.fulfillmentOptionsId + 'Pickup';
     }
@@ -815,23 +832,49 @@ export default class SearchProductCard extends LightningElement {
         return this.fulfillmentOptionsId + 'Shipping';
     }
 
-    handlefulfillmentOptionClick(event) {
-        this.clickedButtonLabel = event.target.label;
+    handlefulfillmentOptionPickupClick(event) {
+        this.handlefulfillmentOption('Pickup');
+    }
+
+    handlefulfillmentOptionShippingClick(event) {
+        this.handlefulfillmentOption('Shipping');
+    }
+
+    handlefulfillmentOptionDeliveryClick(event) {
+        this.handlefulfillmentOption('Delivery');
+    }
+
+    handlefulfillmentOption(option) {
+        this.chosenFulfillmentOption = option;
         this.displayPackSize = true;
         this.displayInventoryText = false;
         this.inventoryAvailableToOrder = false;
         this.packSizeValue = null;
     }
 
-    handlePackSizeClick(event) {
+    handleEachPackSizeClick(event) {
+        this.handlePackSizeClick('Each');
+    }
+    handleCasePackSizeClick(event) {
+        this.handlePackSizeClick('Case');
+    }
+    handleLayerPackSizeClick(event) {
+        this.handlePackSizeClick('Layer');
+    }
+    handlePalletPackSizeClick(event) {
+        this.handlePackSizeClick('Pallet');
+    }
+
+    handlePackSizeClick(chosenPackSize) {
         this.inventoryText = '';
         this.inventoryAvailableToOrder = true;
         this.displayInventoryText = true;
-        this.packSizeValue = event.detail.value;
+        this.packSizeValue = chosenPackSize;
 
-        if (this.packSizeValue === 'Pallet' && this.clickedButtonLabel === 'Shipping') {
+        if (this.packSizeValue === 'Pallet' && this.chosenFulfillmentOption === 'Shipping') {
             this.inventoryAvailableToOrder = false;
-            this.inventoryText = 'This product is out of stock or cannot be fulfilled based on your chosen options';
+            this.inventoryText =
+                '<font color="red">This product is out of stock or cannot be fulfilled based on your chosen options</font>';
             return;
         }
 
@@ -841,11 +884,11 @@ export default class SearchProductCard extends LightningElement {
         else if (this.packSizeValue === 'Layer') this.inventoryText += '72 Layers';
         else this.inventoryText += '20+ ' + this.packSizeValue + 's';
 
-        this.inventoryText += ' Available for ' + this.clickedButtonLabel;
+        this.inventoryText += ' Available for ' + this.chosenFulfillmentOption;
 
-        if (this.clickedButtonLabel === 'Pickup') this.inventoryText += ' at Canton';
-        else this.inventoryText += ' to 43720 Westminister Way';
+        if (this.chosenFulfillmentOption === 'Pickup') this.inventoryText += ' at <font color="blue">Canton</font>';
+        else this.inventoryText += ' to <font color="blue">43720 Westminister Way</font>';
 
-        if (this.clickedButtonLabel === 'Shipping') this.inventoryText += ' in 2-3 business days.';
+        if (this.chosenFulfillmentOption === 'Shipping') this.inventoryText += ' in 2-3 business days.';
     }
 }
